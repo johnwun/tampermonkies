@@ -86,11 +86,13 @@ var loadButtonFunc = function() {
     }
     
     
-    devBtn.appendChild(devTextNode);
-    gpBtn.appendChild(gpTextNode);
-    node.appendChild(devBtn); 
-    node.appendChild(gpBtn);
-    menu.appendChild(node);
+    if(lastUploadedIndex != -1 ){
+        devBtn.appendChild(devTextNode);
+        gpBtn.appendChild(gpTextNode);
+        node.appendChild(devBtn); 
+        node.appendChild(gpBtn);
+        menu.appendChild(node);
+    }
   }
 
   poller();
