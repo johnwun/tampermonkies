@@ -27,7 +27,7 @@ var loadButtonFunc = function() {
   gpBtn.style.color = 'white';
   gpBtn.id = 'ns-gp-button';
 
-  var urlMatch = window.location.href.toString().match(/\/(\d+)\//);
+  var urlMatch = window.location.href.toString().match(/\/(\d+)\/*/);
 
   if (urlMatch && urlMatch.length === 2) {
     var changeNumber = urlMatch[1];
