@@ -4,7 +4,7 @@
 // @version      1.3.2
 // @description  makes buttons
 // @author       John Wundes 
-// @include https://gerrit.nexgen.neustar.biz/*
+// @include https://gerrit.nexgen.neustar.biz/* 
 // @grant        none  
 // ==/UserScript==
 
@@ -40,23 +40,26 @@ var loadButtonFunc = function() {
     var lastFailureIndex = htmlText.lastIndexOf('FAILURE');
     var devTextNode;
     var gpTextNode;
+    var subSiteFolder = '';
       
-        
+    // extract a suffix if it exists from the project (distinguish between eng-neuak-ui and eng-neuak-ui-manage) assuming other projects will follow suit. 
+    var projectString = document.querySelector('#change_infoTable > tbody > tr:nth-child(5) > td > a.gwt-InlineHyperlink').text.match(/eng-neuak-ui[-]?(\w+)?/)[1];
+      
+    if(projectString){ 
+        subSiteFolder = '/' + projectString;
+    }
+    
     devTextNode = document.createTextNode(changeNumber + ' Dev');
     gpTextNode = document.createTextNode(changeNumber + ' GP');  
     gpBtn.style.display = 'none';
     var openDevPage = function() {
-      window.open('https://mip.dev.agkn.net/' + changeNumber, '_blank');
+      window.open('https://mip.dev.agkn.net/' + changeNumber + subSiteFolder, '_blank');
     };
     var openGpPage = function() {
-      window.open('https://mip.gp.agkn.net/' + changeNumber, '_blank');
+      window.open('https://mip.gp.agkn.net/' + changeNumber + subSiteFolder, '_blank');
     };
 
-    if(lastAbandonedIndex > lastUploadedIndex){
-      // no onclick
-      devTextNode = document.createTextNode(changeNumber + ' was Abandoned!');
-      devBtn.style.backgroundColor = '#aaa'; 
-    }else
+
     if (lastMergedIndex != -1) {
     // no onclick
     devTextNode = document.createTextNode(changeNumber + ' was Merged!');
@@ -83,10 +86,9 @@ var loadButtonFunc = function() {
       gpBtn.style.backgroundColor = '#5A5';   
       gpBtn.style.cursor = 'pointer';
       gpBtn.style.display = 'inline';
-    }
-    
-    
-    if(lastUploadedIndex != -1 ){
+    } 
+      
+      if(lastUploadedIndex != -1 ){ 
         devBtn.appendChild(devTextNode);
         gpBtn.appendChild(gpTextNode);
         node.appendChild(devBtn); 
