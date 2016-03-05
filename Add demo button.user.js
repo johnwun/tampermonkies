@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Add demo buttons
 // @namespace    http://wundes.com/
-// @version      1.3.3
+// @version      1.3.4
 // @description  makes buttons
 // @author       John Wundes 
 // @include https://gerrit.nexgen.neustar.biz/* 
@@ -43,9 +43,12 @@ var loadButtonFunc = function() {
     var subSiteFolder = '';
       
     // extract a suffix if it exists from the project (distinguish between eng-neuak-ui and eng-neuak-ui-manage) assuming other projects will follow suit. 
-    var projectString = document.querySelector('#change_infoTable > tbody > tr:nth-child(5) > td > a.gwt-InlineHyperlink').text.match(/eng-neuak-ui[-]?(\w+)?/)[1];
+    var projectStringMatch = document.querySelector('#change_infoTable > tbody > tr:nth-child(5) > td > a.gwt-InlineHyperlink').text.match(/eng-neuak-ui[-]?(\w+)?/);
       
-    if(projectString){ 
+     
+      
+    if(projectStringMatch && projectStringMatch.length > 1){ 
+        var projectString = projectStringMatch[1];
         subSiteFolder = '/' + projectString;
     }
     
