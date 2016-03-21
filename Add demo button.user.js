@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Add demo buttons
 // @namespace    http://wundes.com/
-// @version      1.3.4
+// @version      1.3.5
 // @description  makes buttons
 // @author       John Wundes 
 // @include https://gerrit.nexgen.neustar.biz/* 
@@ -26,6 +26,10 @@ var loadButtonFunc = function() {
   var gpBtn = document.createElement('BUTTON');
   gpBtn.style.color = 'white';
   gpBtn.id = 'ns-gp-button';
+    
+  var miiBtn = document.createElement('BUTTON');
+  miiBtn.style.color = 'white';
+  miiBtn.id = 'ns-mii-button';
 
   var urlMatch = window.location.href.toString().match(/\/(\d+)\/*/);
 
@@ -40,8 +44,13 @@ var loadButtonFunc = function() {
     var lastFailureIndex = htmlText.lastIndexOf('FAILURE');
     var devTextNode;
     var gpTextNode;
+    var miiTextNode;
     var subSiteFolder = '';
-      
+    
+    var devUrl;
+    var gpUrl;
+    var miiUrl;
+    
     // extract a suffix if it exists from the project (distinguish between eng-neuak-ui and eng-neuak-ui-manage) assuming other projects will follow suit. 
     var projectStringMatch = document.querySelector('#change_infoTable > tbody > tr:nth-child(5) > td > a.gwt-InlineHyperlink').text.match(/eng-neuak-ui[-]?(\w+)?/);
       
@@ -53,13 +62,24 @@ var loadButtonFunc = function() {
     }
     
     devTextNode = document.createTextNode(changeNumber + ' Dev');
-    gpTextNode = document.createTextNode(changeNumber + ' GP');  
+    gpTextNode = document.createTextNode(changeNumber + ' GP');
+    miiTextNode = document.createTextNode(changeNumber + ' MII');  
     gpBtn.style.display = 'none';
+    miiBtn.style.display = 'none';
+    
+    devUrl = 'https://mip.dev.agkn.net/gerrit' + changeNumber + subSiteFolder;
+    gpUrl = 'https://mip.gp.agkn.net/gerrit' + changeNumber + subSiteFolder;
+    miiUrl = 'https://mip-qa.mii.agkn.net/gerrit' + changeNumber + subSiteFolder;
+      
+      
     var openDevPage = function() {
-      window.open('https://mip.dev.agkn.net/' + changeNumber + subSiteFolder, '_blank');
+      window.open(devUrl, '_blank');
     };
     var openGpPage = function() {
-      window.open('https://mip.gp.agkn.net/' + changeNumber + subSiteFolder, '_blank');
+      window.open(gpUrl, '_blank');
+    };
+    var openMiiPage = function() {
+      window.open(miiUrl, '_blank');
     };
 
 
@@ -89,13 +109,25 @@ var loadButtonFunc = function() {
       gpBtn.style.backgroundColor = '#5A5';   
       gpBtn.style.cursor = 'pointer';
       gpBtn.style.display = 'inline';
+        
+      miiBtn.onclick = openMiiPage;
+      miiBtn.style.backgroundColor = '#5A5';   
+      miiBtn.style.cursor = 'pointer';
+      miiBtn.style.display = 'inline';
     } 
       
       if(lastUploadedIndex != -1 ){ 
         devBtn.appendChild(devTextNode);
         gpBtn.appendChild(gpTextNode);
+        miiBtn.appendChild(miiTextNode);
+          
+        devBtn.title = devUrl;
+        gpBtn.title = gpUrl;;
+        miiBtn.title = miiUrl;  
+          
         node.appendChild(devBtn); 
         node.appendChild(gpBtn);
+        node.appendChild(miiBtn);
         menu.appendChild(node);
     }
   }
