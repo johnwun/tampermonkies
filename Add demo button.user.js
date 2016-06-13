@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Add demo buttons
 // @namespace    http://wundes.com/
-// @version      1.3.8
+// @version      2.0.0
 // @description  makes buttons
 // @author       John Wundes
 // @include https://gerrit.nexgen.neustar.biz/*
@@ -66,9 +66,9 @@ var loadButtonFunc = function() {
     gpBtn.style.display = 'none';
     miiBtn.style.display = 'none';
 
-    devUrl = 'https://mip.dev.agkn.net/gerrit' + changeNumber.toString().substring(1) + subSiteFolder;
-    gpUrl = 'https://mip.gp.agkn.net/gerrit' + changeNumber.toString().substring(1)  + subSiteFolder;
-    miiUrl = 'https://mip-qa.mii.agkn.net/gerrit' + changeNumber.toString().substring(1) + subSiteFolder;
+    devUrl = 'https://mip.dev.agkn.net/gerrit' + changeNumber.toString() + subSiteFolder;
+    gpUrl = 'https://mip.gp.agkn.net/gerrit' + changeNumber.toString() + subSiteFolder;
+    miiUrl = 'https://mip-qa.mii.agkn.net/gerrit' + changeNumber.toString() + subSiteFolder;
 
 
       var openDevPage = function() {
