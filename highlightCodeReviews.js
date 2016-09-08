@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Highlight Reviews
 // @namespace    http://wundes.com/
-// @version      0.0.1
+// @version      0.0.2
 // @description  highlights code reviews as red and green, or blue for comments only
 // @author       John Wundes
 // @include https://gerrit.nexgen.neustar.biz/*
@@ -14,8 +14,11 @@ var pollFrequency = 1000; //milliseconds
 var timer2;
 var checkChanges = function() {
   [].filter.call($$all('.com-google-gerrit-client-change-Message_BinderImpl_GenCss_style-closed'), (e) => {
-      return e.textContent.match('Code-Review') ||
-             e.textContent.match('successfully merged');
+      return e.textContent.match(/Patch Set [0-9]+:/) &&
+            !e.textContent.match(/Patch Set [0-9]+ was rebased/) &&
+            !e.textContent.match('JenkinsEnterprise') ||
+             e.textContent.match('successfully merged')||
+             e.textContent.match('Abandoned');
   }).filter((e) => {
       return typeof e === 'object';}).map((e) => {
         if(e.textContent.match('Review[+]1')){
@@ -36,7 +39,11 @@ var checkChanges = function() {
             // black with green text
             e.style.backgroundColor = '#666';
             [].map.call(e.getElementsByTagName("div"),(function(c){c.style.color = '#dfd';}));
-        } else if (e.textContent.match('-Code-Review')) {
+        } else if (e.textContent.match('Abandoned')) {
+            // black with red text
+            e.style.backgroundColor = '#666';
+            [].map.call(e.getElementsByTagName("div"),(function(c){c.style.color = '#f88';}));
+        } else {
             // info
             e.style.backgroundColor = '#eeecff';
         }
