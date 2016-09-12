@@ -4,8 +4,10 @@
 // @version      0.0.2
 // @description  highlights code reviews as red and green, or blue for comments only
 // @author       John Wundes
-// @include https://gerrit.nexgen.neustar.biz/*
+// @include      https://gerrit.nexgen.neustar.biz/*
 // @grant        none
+// @updateURL    https://raw.githubusercontent.com/johnwun/tampermonkies/master/highlightCodeReviews.js
+// @downloadURL  https://raw.githubusercontent.com/johnwun/tampermonkies/master/highlightCodeReviews.js
 // ==/UserScript==
 
 var $$ = document.querySelector.bind(document);
