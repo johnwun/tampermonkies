@@ -1,18 +1,22 @@
 // ==UserScript==
 // @name         Add demo buttons
 // @namespace    http://wundes.com/
-// @version      2.0.1
+// @version      2.0.2
 // @description  makes buttons
 // @author       John Wundes
 // @include https://gerrit.nexgen.neustar.biz/*
 // @grant        none
 // ==/UserScript==
 
+var $$ = document.querySelector.bind(document);
+var $$all = document.querySelectorAll.bind(document);
 var pollFrequency = 1000; //milliseconds
 var timer1;
 var loadButtonFunc = function() {
   var menu = document.getElementsByClassName('topmenuTDglue')[0];
   var oldButtonNode = document.getElementById('ns-demo-button-div');
+  var projectTitleNode = document.querySelectorAll('#change_infoTable > tbody > tr:nth-child(5) > td > a.gwt-InlineHyperlink');
+  var projectTitle = projectTitleNode.length ? projectTitleNode[0].text : '';
   if (oldButtonNode) {
     menu.removeChild(oldButtonNode);
   }
@@ -51,6 +55,7 @@ var loadButtonFunc = function() {
     var devUrl;
     var gpUrl;
     var miiUrl;
+    var prefix;
     /*  // NERFing because new structure ignores the /manage prefix...
     // extract a suffix if it exists from the project (distinguish between eng-neuak-ui and eng-neuak-ui-manage) assuming other projects will follow suit.
     var projectStringMatch = document.querySelector('#change_infoTable > tbody > tr:nth-child(5) > td > a.gwt-InlineHyperlink').text.match(/eng-neuak-ui[-]?(\w+)?/);
@@ -65,10 +70,11 @@ var loadButtonFunc = function() {
     miiTextNode = document.createTextNode(changeNumber + ' MII');
     gpBtn.style.display = 'none';
     miiBtn.style.display = 'none';
+    prefix = projectTitle.indexOf('app-onboarding-portal') !== -1 ? 'onboarding-dev' : 'mip';
 
-    devUrl = 'https://mip.dev.agkn.net/gerrit' + changeNumber.toString() + subSiteFolder;
-    gpUrl = 'https://mip.gp.agkn.net/gerrit' + changeNumber.toString() + subSiteFolder;
-    miiUrl = 'https://mip.mii.agkn.net/gerrit' + changeNumber.toString() + subSiteFolder;
+    devUrl = 'https://' + prefix + '.dev.agkn.net/gerrit' + changeNumber.toString() + subSiteFolder;
+    gpUrl = 'https://' + prefix + '.gp.agkn.net/gerrit' + changeNumber.toString() + subSiteFolder;
+    miiUrl = 'https://' + prefix + '.mii.agkn.net/gerrit' + changeNumber.toString() + subSiteFolder;
 
 
       var openDevPage = function() {
@@ -134,7 +140,6 @@ var loadButtonFunc = function() {
         menu.appendChild(node);
     }
   }
-
   poller();
 };
 
