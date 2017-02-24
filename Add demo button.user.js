@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Add demo buttons
 // @namespace    http://wundes.com/
-// @version      2.0.2
+// @version      2.0.3
 // @description  makes buttons
 // @author       John Wundes
 // @include https://gerrit.nexgen.neustar.biz/*
@@ -110,18 +110,24 @@ var loadButtonFunc = function() {
       }
 
     } else {
+      var commonStyles = {
+          border: '2px solid rgba(0, 0, 0, 0.2)',
+          borderRadius: '2px',
+          backgroundColor: '#5A5',
+          cursor: 'pointer',
+          boxSizing: 'content-box',
+          fontWeight: 'bold',
+          margin: '1px 1px 0 0'
+      };
       devBtn.onclick = openDevPage;
-      devBtn.style.backgroundColor = '#5A5';
-      devBtn.style.cursor = 'pointer';
+      Object.assign(devBtn.style, commonStyles);
 
       gpBtn.onclick = openGpPage;
-        gpBtn.style.backgroundColor = '#5A5';
-      gpBtn.style.cursor = 'pointer';
+      Object.assign(gpBtn.style, commonStyles);
       gpBtn.style.display = 'inline';
 
       miiBtn.onclick = openMiiPage;
-      miiBtn.style.backgroundColor = '#5A5';
-      miiBtn.style.cursor = 'pointer';
+      Object.assign(miiBtn.style, commonStyles);
       miiBtn.style.display = 'inline';
     }
 
