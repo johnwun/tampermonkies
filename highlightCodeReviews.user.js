@@ -37,7 +37,7 @@ var checkChanges = function() {
             // dark red with red text
             e.style.backgroundColor = '#f99';
             [].map.call(e.getElementsByTagName("div"),(function(c){c.style.color = '#c00';}));
-        } else if (e.textContent.match('merged')) {
+        } else if (e.textContent.match('successfully merged')) {
             // black with green text
             e.style.backgroundColor = '#666';
             [].map.call(e.getElementsByTagName("div"),(function(c){c.style.color = '#dfd';}));
