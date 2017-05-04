@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Highlight Reviews
 // @namespace    http://wundes.com/
-// @version      0.0.2
+// @version      0.0.3
 // @description  highlights code reviews as red and green, or blue for comments only
 // @author       John Wundes
 // @include      https://gerrit.nexgen.neustar.biz/*
