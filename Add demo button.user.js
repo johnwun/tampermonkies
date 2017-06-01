@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Add demo buttons
 // @namespace    http://wundes.com/
-// @version      2.0.3
+// @version      2.0.4
 // @description  makes buttons
 // @author       John Wundes
 // @include https://gerrit.nexgen.neustar.biz/*
@@ -17,6 +17,7 @@ var loadButtonFunc = function() {
   var oldButtonNode = document.getElementById('ns-demo-button-div');
   var projectTitleNode = document.querySelectorAll('#change_infoTable > tbody > tr:nth-child(5) > td > a.gwt-InlineHyperlink');
   var projectTitle = projectTitleNode.length ? projectTitleNode[0].text : '';
+  var changeDescriptionDiv = document.getElementsByClassName('com-google-gerrit-client-change-CommitBox_BinderImpl_GenCss_style-text')[0];
   if (oldButtonNode) {
     menu.removeChild(oldButtonNode);
   }
@@ -145,6 +146,8 @@ var loadButtonFunc = function() {
         node.appendChild(miiBtn);
         menu.appendChild(node);
     }
+    var linkedTicketDescription = changeDescriptionDiv.innerHTML.replace(/(\()([A-Z]+-[0-9]+)(\))/g, '(<a href="https://jira.nexgen.neustar.biz/browse/$2" target="_blank">$2</a>)');
+    changeDescriptionDiv.innerHTML = linkedTicketDescription;
   }
   poller();
 };
