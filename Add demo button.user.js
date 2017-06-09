@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Add demo buttons
 // @namespace    http://wundes.com/
-// @version      2.0.4
+// @version      2.0.5
 // @description  makes buttons
 // @author       John Wundes
 // @include https://gerrit.nexgen.neustar.biz/*
