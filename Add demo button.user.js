@@ -146,7 +146,12 @@ var loadButtonFunc = function() {
         node.appendChild(miiBtn);
         menu.appendChild(node);
     }
-    var linkedTicketDescription = changeDescriptionDiv.innerHTML.replace(/(\()([A-Z]+-[0-9]+)(\))/g, '(<a href="https://jira.nexgen.neustar.biz/browse/$2" target="_blank">$2</a>)');
+    var linkedTicketDescription = changeDescriptionDiv.innerHTML
+       // replaces 'chore(XX-NNN)' style
+       .replace(/(\()([A-Z]+-[0-9]+)(\))/g, '(<a style="color:green;text-decoration:underline" href="https://jira.nexgen.neustar.biz/browse/$2" target="_blank">$2</a>)')
+       // replaces raw 'XX-NNN' style at start of line
+       .replace(/((^|\n| )[A-Z]+-[0-9]+)/g, '<a style="color:green;text-decoration:underline" href="https://jira.nexgen.neustar.biz/browse/$1" target="_blank">$1</a>')
+    ;
     changeDescriptionDiv.innerHTML = linkedTicketDescription;
   }
   poller();
