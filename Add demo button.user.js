@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Add demo buttons
 // @namespace    http://wundes.com/
-// @version      2.0.5
+// @version      2.0.6
 // @description  makes buttons
 // @author       John Wundes
 // @include https://gerrit.nexgen.neustar.biz/*
@@ -147,10 +147,8 @@ var loadButtonFunc = function() {
         menu.appendChild(node);
     }
     var linkedTicketDescription = changeDescriptionDiv.innerHTML
-       // replaces 'chore(XX-NNN)' style
-       .replace(/(\()([A-Z]+-[0-9]+)(\))/g, '(<a style="color:green;text-decoration:underline" href="https://jira.nexgen.neustar.biz/browse/$2" target="_blank">$2</a>)')
-       // replaces raw 'XX-NNN' style at start of line
-       .replace(/((^|\n| )[A-Z]+-[0-9]+)/g, '<a style="color:green;text-decoration:underline" href="https://jira.nexgen.neustar.biz/browse/$1" target="_blank">$1</a>')
+       // replaces any 'XX-NNN' style unless followed by " or < which is how they are replaced in the regex, preventing infinite recursion.
+      .replace(/([A-Z]+[-_][0-9]+(?![<"0-9]))/g, '<a style="color:green;text-decoration:underline" href="https://jira.nexgen.neustar.biz/browse/$1" target="_blank">$1</a>')
     ;
     changeDescriptionDiv.innerHTML = linkedTicketDescription;
   }
