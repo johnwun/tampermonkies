@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Make all board links external
+// @name         Make all board links (in detail pane) external
 // @namespace    http://wundes.com/
-// @version      0.0.1
+// @version      0.0.2
 // @description  makes all openable ticket links appear green, and open in new tab.
 // @author       John Wundes
 // @match        https://jira.nexgen.neustar.biz/secure/RapidBoard.jspa*
@@ -12,9 +12,8 @@ var $$all = document.querySelectorAll.bind(document);
 var pollFrequency = 1000; //milliseconds
 var timer2;
 var checkChanges = function() {
-    console.log('tick');
-  [].filter.call($$all('a'), (e) => {
-      return e.href && e.href.match(/browse/);
+  [].filter.call($$all('#ghx-detail-contents a'), (e) => {
+      return e.href && (e.href.match(/browse/) || e.href.match('confluence'));
   }).filter((e) => {
       return typeof e === 'object';}).map((e) => {
         if(1){
@@ -38,3 +37,4 @@ var highlightPoller = function() {
 };
 
 highlightPoller();
+
