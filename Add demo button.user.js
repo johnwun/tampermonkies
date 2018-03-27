@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Add demo buttons
 // @namespace    http://wundes.com/
-// @version      2.0.6
+// @version      2.0.7
 // @description  makes buttons
 // @author       John Wundes
 // @include https://gerrit.nexgen.neustar.biz/*
@@ -95,7 +95,7 @@ var loadButtonFunc = function() {
     devBtn.style.backgroundColor = '#f00';
 
     } else
-    if(lastFailureIndex > lastUploadedIndex && lastSuccessIndex < lastFailureIndex){
+    if(lastFailureIndex > lastUploadedIndex && lastStartedIndex < lastFailureIndex){
       devTextNode = document.createTextNode(changeNumber + '  Build FAILURE!');
       devBtn.style.backgroundColor = '#f00';
     } else
