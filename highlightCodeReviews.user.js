@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Highlight Reviews
 // @namespace    http://wundes.com/
-// @version      0.0.3
+// @version      0.0.4
 // @description  highlights code reviews as red and green, or blue for comments only
 // @author       John Wundes
 // @include      https://gerrit.nexgen.neustar.biz/*
@@ -15,6 +15,12 @@ var $$all = document.querySelectorAll.bind(document);
 var pollFrequency = 1000; //milliseconds
 var timer2;
 var checkChanges = function() {
+  
+  // redirects from 'sign-in' status to login page'
+  var loginLinkArray = Array.from(document.getElementsByClassName('menuItem')).filter(e => e.text === 'Sign In');
+  if(loginLinkArray.length) { 
+      loginLinkArray[0].click();
+  } 
   [].filter.call($$all('.com-google-gerrit-client-change-Message_BinderImpl_GenCss_style-closed'), (e) => {
       return e.textContent.match(/Patch Set [0-9]+:/) &&
             !e.textContent.match(/Patch Set [0-9]+ was rebased/) &&
