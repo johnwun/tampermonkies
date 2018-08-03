@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Add demo buttons
 // @namespace    http://wundes.com/
-// @version      2.0.7
+// @version      2.0.8
 // @description  makes buttons
 // @author       John Wundes
 // @include https://gerrit.nexgen.neustar.biz/*
@@ -36,6 +36,11 @@ var loadButtonFunc = function() {
   miiBtn.style.color = 'white';
   miiBtn.id = 'ns-mii-button';
 
+  var dockerDevBtn = document.createElement('BUTTON');
+    dockerDevBtn.style.color = 'white';
+    dockerDevBtn.id = 'ns-dock-dev-button';
+
+
   var urlMatch = window.location.href.toString().match(/\/(\d+)\/*/);
 
   if (urlMatch && urlMatch.length === 2) {
@@ -51,11 +56,13 @@ var loadButtonFunc = function() {
     var devTextNode;
     var gpTextNode;
     var miiTextNode;
+    var dockerDevTextNode
     var subSiteFolder = '';
 
     var devUrl;
     var gpUrl;
     var miiUrl;
+    var dockerDevUrl
     var prefix;
     /*  // NERFing because new structure ignores the /manage prefix...
     // extract a suffix if it exists from the project (distinguish between eng-neuak-ui and eng-neuak-ui-manage) assuming other projects will follow suit.
@@ -66,17 +73,20 @@ var loadButtonFunc = function() {
         subSiteFolder = '/' + projectString;
     }
     */
-    devTextNode = document.createTextNode(changeNumber + ' Dev');
-    gpTextNode = document.createTextNode(changeNumber + ' GP');
-    miiTextNode = document.createTextNode(changeNumber + ' MII');
+    devTextNode = document.createTextNode('Dev');
+    gpTextNode = document.createTextNode('GP');
+    miiTextNode = document.createTextNode('MII');
+    dockerDevTextNode = document.createTextNode(`Dkr`);
+
     gpBtn.style.display = 'none';
     miiBtn.style.display = 'none';
+    dockerDevBtn
     prefix = projectTitle.indexOf('app-onboarding-portal') !== -1 ? 'onboarding-dev' : 'mip';
 
-    devUrl = 'https://' + prefix + '.dev.agkn.net/gerrit' + changeNumber.toString() + subSiteFolder;
-    gpUrl = 'https://' + prefix + '.gp.agkn.net/gerrit' + changeNumber.toString() + subSiteFolder;
-    miiUrl = 'https://' + prefix + '.mii.agkn.net/gerrit' + changeNumber.toString() + subSiteFolder;
-
+    devUrl = `https://${prefix}.dev.agkn.net/gerrit${changeNumber.toString()}${subSiteFolder}`;
+    gpUrl = `https://${prefix}.gp.agkn.net/gerrit${changeNumber.toString()}${subSiteFolder}`;
+    miiUrl = `https://${prefix}.mii.agkn.net/gerrit${changeNumber.toString()}${subSiteFolder}`;
+    dockerDevUrl = `https://nginx-docker.dev.agkn.net/gerrit${changeNumber.toString()}/`
 
       var openDevPage = function() {
       window.open(devUrl, '_blank');
@@ -87,6 +97,9 @@ var loadButtonFunc = function() {
     var openMiiPage = function() {
       window.open(miiUrl, '_blank');
     };
+    var openDockerDevPage = function() {
+      window.open(dockerDevUrl, '_blank');
+    };
 
 
     if (lastMergedIndex != -1) {
@@ -96,7 +109,7 @@ var loadButtonFunc = function() {
 
     } else
     if(lastFailureIndex > lastUploadedIndex && lastStartedIndex < lastFailureIndex){
-      devTextNode = document.createTextNode(changeNumber + '  Build FAILURE!');
+      devTextNode = document.createTextNode(changeNumber + ' Build FAILURE!');
       devBtn.style.backgroundColor = '#f00';
     } else
     // if a new build is in process, or hasn't been triggered yet.
@@ -130,20 +143,27 @@ var loadButtonFunc = function() {
       miiBtn.onclick = openMiiPage;
       Object.assign(miiBtn.style, commonStyles);
       miiBtn.style.display = 'inline';
+
+      dockerDevBtn.onclick = openDockerDevPage;
+      Object.assign(dockerDevBtn.style, commonStyles);
+      dockerDevBtn.style.display = 'inline';
     }
 
       if(lastUploadedIndex != -1 ){
         devBtn.appendChild(devTextNode);
         gpBtn.appendChild(gpTextNode);
         miiBtn.appendChild(miiTextNode);
+        dockerDevBtn.appendChild(dockerDevTextNode);
 
         devBtn.title = devUrl;
         gpBtn.title = gpUrl;
         miiBtn.title = miiUrl;
+        dockerDevBtn.title = dockerDevUrl;
 
         node.appendChild(devBtn);
         node.appendChild(gpBtn);
         node.appendChild(miiBtn);
+        node.appendChild(dockerDevBtn);
         menu.appendChild(node);
     }
     var linkedTicketDescription = changeDescriptionDiv.innerHTML
