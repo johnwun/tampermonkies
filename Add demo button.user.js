@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Add demo buttons
 // @namespace    http://wundes.com/
-// @version      2.0.8
+// @version      2.0.81
 // @description  makes buttons
 // @author       John Wundes
 // @include https://gerrit.nexgen.neustar.biz/*
@@ -77,10 +77,10 @@ var loadButtonFunc = function() {
     gpTextNode = document.createTextNode('GP');
     miiTextNode = document.createTextNode('MII');
     dockerDevTextNode = document.createTextNode(`Dkr`);
-
+    // hide buttons if building
     gpBtn.style.display = 'none';
     miiBtn.style.display = 'none';
-    dockerDevBtn
+    dockerDevBtn.style.display = 'none';
     prefix = projectTitle.indexOf('app-onboarding-portal') !== -1 ? 'onboarding-dev' : 'mip';
 
     devUrl = `https://${prefix}.dev.agkn.net/gerrit${changeNumber.toString()}${subSiteFolder}`;
